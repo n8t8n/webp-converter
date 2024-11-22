@@ -4,34 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Converter</title>
+    <title>WEBP Converter | Jonathan A. | @n8t8n </title>
     <meta name="description"
         content="Effortlessly convert and compress your images from JPG, PNG, GIF to WEBP using the power of HTML5 Canvas API.">
     <meta name="keywords"
         content="image compressor, webp converter, image converter, jpg to webp, png to webp, gif to webp">
-    <meta name="author" content="Web Converter, Jonathan A.">
+    <meta name="author" content="WEBP Converter, Jonathan A.">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Web Converter">
+    <meta property="og:title" content="WEBP Converter">
     <meta property="og:description"
         content="Effortlessly convert and compress your images from JPG, PNG, GIF to WEBP using the power of HTML5 Canvas API.">
     <meta property="og:image" content="android-chrome-512x512.png">
     <meta property="og:url" content="https://mixi.uno">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Web Converter">
+    <meta name="twitter:title" content="WEBP Converter">
     <meta name="twitter:description"
         content="Effortlessly convert and compress your images from JPG, PNG, GIF to WEBP using the power of HTML5 Canvas API.">
     <link rel="icon" type="image/png" href="android-chrome-192x192.png">
-    <!-- <script src="https://unpkg.com/vue@3"></script> -->
-    <script src="js/vue.js"></script>
-
+    <script src="https://unpkg.com/vue@3.3.4/dist/vue.global.prod.js"></script>
     <link rel="manifest" href="site.webmanifest">
     <meta name="theme-color" content="#ffffff">
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
             "@type": "WebPage",
-            "name": "Web Converter",
+            "name": "WEBP Converter",
             "description": "Effortlessly convert and compress your images from JPG, PNG, GIF to WEBP using the power of HTML5 Canvas API.",
             "image": "android-chrome-512x512.png",
             "url": "https://mixi.uno",
@@ -42,104 +40,124 @@
             }
         }
     </script>
-
-   
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <div id="drop-area">
-        <div class="m-auto">Drop files here or click to upload</div>
-        <input type="file" id="file-input" />
+    <div id="loader" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
     </div>
 
-    <div id="app">
-        <section class="top-hero" aria-labelledby="hero-heading">
-            <h1 id="hero-heading">WEBP Converter</h1>
-            <p class="lead">Hello I'm Jonathan A. This was my first try with JS to convert and compress images from <strong>JPG</strong>,
-                <strong>PNG</strong>, <strong>GIF</strong> to <strong>WEBP</strong> using the power of HTML5 Canvas API.
-                Your data stays safe as all processing happens locally on your device.
-            </p>
+    <div id="content" style="display: none;">
 
-        </section>
-
-        <div class="stats">
-            <button @click="toggleView" class="switch-view">
-                <span style="display: flex;gap: 5px;" v-html="isTableView ? tableIcon : gridIcon"></span>
-            </button>
-            <div class="d-flex align-items-center gap-2">
-                <svg width="20" height="20" viewBox="0 0 0.375 0.375" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0.263 0.075a0.038 0.038 0 1 0 0 0.075 0.038 0.038 0 0 0 0 -0.075" fill="#404050" />
-                    <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M0 0.038A0.038 0.038 0 0 1 0.038 0h0.3A0.038 0.038 0 0 1 0.375 0.038v0.3a0.038 0.038 0 0 1 -0.004 0.018A0.038 0.038 0 0 1 0.338 0.375h-0.3A0.038 0.038 0 0 1 0 0.338zm0.121 0.041 -0.009 -0.009 -0.088 0.088V0.038a0.013 0.013 0 0 1 0.013 -0.013h0.3a0.013 0.013 0 0 1 0.013 0.013V0.25h-0.057L0.121 0.079z"
-                        fill="#404050" />
-                </svg> <strong>Total Images:</strong> {{ totalImages }}
-            </div>
-            <div class="d-flex align-items-center gap-2 d-none d-md-block">
-                <svg width="20px" height="20px" viewBox="0 0 0.375 0.375" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M0 0.038A0.038 0.038 0 0 1 0.038 0h0.215a0.038 0.038 0 0 1 0.027 0.011l0.085 0.085A0.038 0.038 0 0 1 0.375 0.123V0.338a0.038 0.038 0 0 1 -0.038 0.038H0.275v-0.088A0.038 0.038 0 0 0 0.238 0.25h-0.1A0.038 0.038 0 0 0 0.1 0.288V0.375H0.038A0.038 0.038 0 0 1 0 0.338z"
-                        fill="#404050" />
-                    <path
-                        d="M0.125 0.375h0.125v-0.088a0.013 0.013 0 0 0 -0.013 -0.013h-0.1a0.013 0.013 0 0 0 -0.013 0.013z"
-                        fill="#404050" />
-                </svg> <strong>Total Size:</strong> {{ totalSize }} MB
-            </div>
-
+        <div id="drop-area">
+            <div class="m-auto">Click or drag files to start converting your images</div>
+            <input type="file" id="file-input" />
         </div>
 
-        <div v-if="!isTableView" class="image-grid">
-            <div v-for="(image, index) in images" :key="index" class="image-card">
-                <img :src="image.webpImage" :alt="image.name" class="img-fluid">
-                <div class="image-card-content p-3">
-                    <h5>{{ image.name }}</h5>
-                    <div>
-                        <div>
-                            <p>Original: {{ image.originalSizeMB }} MB</p>
-                            <p>New: {{ image.newSizeMB }} MB</p>
-                        </div>
-                        <div class="d-flex w-100">
-                            <button @click="removeImage(index)"
-                                class="rounded-3 btn btn-outline-secondary btn-sm">Remove</button>
+        <div id="app">
+            <section class="top-hero" aria-labelledby="hero-heading">
+                <h1 id="hero-heading">WEBP Converter</h1>
+                <p class="lead">Hi, I'm Jonathan A., a Sales Executive supporting Customer Success. I'm passionate about exploring JavaScript, like a kid with LEGO, to create tools like this WEBP image converter hosted on Firebase. If you'd like to contact me, you can find me on <a href="https://linkedin.com/in/jonathan-linked-in">LinkedIn</a>.</p>
+            </section>
 
-                            <button @click="downloadImage(image.webpImage, image.name)"
-                                class="rounded-3 btn btn-outline-dark btn-sm">Download</button>
+            <div class="stats">
+                <button @click="toggleView" class="switch-view">
+                    <span style="display: flex;gap: 5px;" v-html="isTableView ? tableIcon : gridIcon"></span>
+                </button>
+                <div class="d-flex align-items-center gap-2">
+                    <svg width="20" height="20" viewBox="0 0 0.375 0.375" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0.263 0.075a0.038 0.038 0 1 0 0 0.075 0.038 0.038 0 0 0 0 -0.075" fill="#404050" />
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M0 0.038A0.038 0.038 0 0 1 0.038 0h0.3A0.038 0.038 0 0 1 0.375 0.038v0.3a0.038 0.038 0 0 1 -0.004 0.018A0.038 0.038 0 0 1 0.338 0.375h-0.3A0.038 0.038 0 0 1 0 0.338zm0.121 0.041 -0.009 -0.009 -0.088 0.088V0.038a0.013 0.013 0 0 1 0.013 -0.013h0.3a0.013 0.013 0 0 1 0.013 0.013V0.25h-0.057L0.121 0.079z"
+                            fill="#404050" />
+                    </svg> <strong>Total Images:</strong> {{ totalImages }}
+                </div>
+                <div class="d-flex align-items-center gap-2 d-none d-md-block">
+                    <svg width="20px" height="20px" viewBox="0 0 0.375 0.375" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M0 0.038A0.038 0.038 0 0 1 0.038 0h0.215a0.038 0.038 0 0 1 0.027 0.011l0.085 0.085A0.038 0.038 0 0 1 0.375 0.123V0.338a0.038 0.038 0 0 1 -0.038 0.038H0.275v-0.088A0.038 0.038 0 0 0 0.238 0.25h-0.1A0.038 0.038 0 0 0 0.1 0.288V0.375H0.038A0.038 0.038 0 0 1 0 0.338z"
+                            fill="#404050" />
+                        <path
+                            d="M0.125 0.375h0.125v-0.088a0.013 0.013 0 0 0 -0.013 -0.013h-0.1a0.013 0.013 0 0 0 -0.013 0.013z"
+                            fill="#404050" />
+                    </svg> <strong>Total Size:</strong> {{ totalSize }} MB
+                </div>
+
+            </div>
+
+            <div v-if="!isTableView" class="image-grid">
+                <div v-for="(image, index) in images" :key="index" class="image-card">
+                    <img :src="image.webpImage" :alt="image.name" class="img-fluid">
+                    <div class="image-card-content p-3">
+                        <h5>{{ image.name }}</h5>
+                        <div>
+                            <div>
+                                <p>Original: {{ image.originalSizeMB }} MB</p>
+                                <p>New: {{ image.newSizeMB }} MB</p>
+                            </div>
+                            <div class="d-flex w-100">
+                                <button @click="removeImage(index)"
+                                    class="rounded-3 btn btn-outline-secondary btn-sm">Remove</button>
+
+                                <button @click="downloadImage(image.webpImage, image.name)"
+                                    class="rounded-3 btn btn-outline-dark btn-sm">Download</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+           
+
+            <table v-if="isTableView" class="mt-4 table-view table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th class="d-none d-md-table-cell">Original Size</th>
+                        <th class="d-none d-md-table-cell">New Size</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(image, index) in images" :key="index">
+                        <td style="width:90px!important"><img :src="image.webpImage" :alt="image.name"
+                                class="img-fluid">
+                        </td>
+                        <td>{{ image.name }}</td>
+                        <td class="d-none d-md-table-cell">{{ image.originalSizeMB }} MB</td>
+                        <td class="d-none d-md-table-cell">{{ image.newSizeMB }} MB</td>
+                        <td>
+                            <button @click="downloadImage(image.webpImage, image.name)"
+                                class="m-1 btn btn-outline-dark rounded-3 btn-sm">⬇</button>
+                            <button @click="removeImage(index)"
+                                class="m-1 btn btn-outline-secondary rounded-3 btn-sm">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <script>
+                 document.addEventListener('DOMContentLoaded', function () {
+                    setTimeout(function () {
+                        document.getElementById('loader').style.display = 'none';
+                        document.getElementById('content').style.display = 'block';
+                    }, 2000); 
+                });
+            </script>
+            <script defer src="js/app.js"></script>
+        </div>
+        
+        <div class="text-center pb-5 mb-3">
+            <small>Please take a moment to review my <a href="/privacy-policy" target="_blank"><em>Privacy Policy</em></a> and <a href="/terms-of-service" target="_blank"><em>Terms of Service</em></a>. </small>
         </div>
 
-        <table v-if="isTableView" class="mt-4 table-view table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th class="d-none d-md-table-cell">Original Size</th>
-                    <th class="d-none d-md-table-cell">New Size</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(image, index) in images" :key="index">
-                    <td style="width:90px!important"><img :src="image.webpImage" :alt="image.name" class="img-fluid">
-                    </td>
-                    <td>{{ image.name }}</td>
-                    <td class="d-none d-md-table-cell">{{ image.originalSizeMB }} MB</td>
-                    <td class="d-none d-md-table-cell">{{ image.newSizeMB }} MB</td>
-                    <td>
-                        <button @click="downloadImage(image.webpImage, image.name)"
-                            class="m-1 btn btn-outline-dark rounded-3 btn-sm">⬇</button>
-                        <button @click="removeImage(index)"
-                            class="m-1 btn btn-outline-secondary rounded-3 btn-sm">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <script defer src="js/app.js"></script>
-
+    </div>
 </body>
 
 </html>
