@@ -1,0 +1,21 @@
+{
+    "short_name": "WEBP Converter",
+    "name": "WEBP Converter",
+    "description": "Effortlessly convert and compress your images from JPG, PNG, GIF to WEBP using the power of HTML5 Canvas API.",
+    "icons": [
+      {
+        "src": "android-chrome-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "android-chrome-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff"
+  }
