@@ -1,3 +1,5 @@
 
 .DS_Store
-.firebase/hosting.cHVibGlj.cache
+.firebase
+firebase.json
+.gitignore
